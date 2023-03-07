@@ -2,8 +2,16 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+//const exp = require("constants");
+//const { urlencoded } = require("body-parser");
+//const { appendFile, fstat } = require("fs");
+//const { url } = require ('inspector');
+//const noteData = require('./db/db.json');
+//const { json } = require('express');
+//const { v4:uuidv4 } = require('uuid');
+//const { title } = require('process');
 const util = require("util");
-const { randomUUID } = require("crypto");
+
 
 
 // Handling Asynchronous Process
@@ -73,19 +81,32 @@ app.delete("/api/notes/:id", function(req, res) {
     })
 
 // HTML Routes
-/*app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "./public/notes.html"));
+app.get("/notes",(req, res) => {
+  res.sendFile(path.join(__dirname,"./public/notes.html"));
+  console.log("recieved a get request")
 });
 
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/index.html"));
-});*/
+app.get('/api/json',(req,res) => {
+  res.JSON(noteData)
+});
 
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/index.html"));
+app.get('/api.notes', (req,res) => {
+  res.sendFile(path.join(__dirname,"./db/db.json"))
+});
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname,"./public/index.html"));
+});
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname,"./public/index.html"));
 });
 
 //Listening
 app.listen(PORT, function() {
     console.log("App listening on PORT" + PORT);
 })
+
+
+
+// const { randomUUID } = require("crypto");

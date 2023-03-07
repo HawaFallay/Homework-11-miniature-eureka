@@ -1,6 +1,6 @@
 // This js helps our data to determine what the user sees and 
 // what data the user is able to post onto the server for storage
-
+const path = require('path');
 
 //Dependencies to read json
 const fs = require("fs");
@@ -15,12 +15,13 @@ module.exports = function (app) {
     // API Get Requests
     app.get("/api/notes", (req, res) => {
       console.log("Execute GET notes request");
+      res.sendFile(path.join(__dirname, '../data/db/db.json'));
 
       // Read the db.json file usisng readFileSync, dont run without sync
-      let data = fs.readFileSync("./app/data/db.json", "utf8");
+      //let data = fs.readFileSync("db/db.json", "utf8");
 
       // Send response of json data of GET request, must be pased and stringify later
-      res.json(JSON.parse(data));
+     // res.json(JSON.parse(data));
     });
 
 // API POST Requests
@@ -29,11 +30,11 @@ app.post("/api/notes", (req, res) => {
       ...req.body,
       id: uniqid(),
     };
-
+console.log(newNote)
     console.log("Post Request for new notes");
 
     // Read data from JSON file
-    let data = fs.readFileSync("./app/data/db.json", "utf8");
+    let data = fs.readFileSync("data/db/db.json", "utf8");
     
     const dataJSON = JSON.parse(data);
 
@@ -41,8 +42,7 @@ app.post("/api/notes", (req, res) => {
     dataJSON.push(newNote);
 
     // Write notes data to 'db.json' file
-    fs.writeFile(
-        "./app/data/db.json",
+    fs.writeFile("data/db/db.json",
         JSON.stringify(dataJSON),
         (err, text) => {
             if (err) {
@@ -63,7 +63,7 @@ app.post("/api/notes", (req, res) => {
     // API DELETE Request
     app.delete("/api/notes/:id", (req, res) => {
         //read file
-        let data = fs.readFileSync("./app/data/db.json", "utf8");
+        let data = fs.readFileSync("data/db/db.json", "utf8");
 
         //variable for setting up the filter method 
         const dataJSON = JSON.parse(data);
@@ -74,8 +74,8 @@ app.post("/api/notes", (req, res) => {
             return note.id !== req.params.id;
         });
         //console.log(req.params)
-
-        fs.writeFile("./app/data/db.json", JSON.stringify(newNotes), (err, text) =>{
+console.log(newNotes)
+        fs.writeFile("data/db/db.json", JSON.stringify(newNotes), (err, text) =>{
             if (err) {
                 console.error(err);
                 return;

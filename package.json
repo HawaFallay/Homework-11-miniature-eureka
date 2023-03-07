@@ -1,5 +1,5 @@
 {
-  "name": "vgghcgvm",
+  "name": "notetaaker",
   "version": "1.0.0",
   "description": "hello",
   "main": "server.js",
@@ -21,5 +21,6 @@
   "bugs": {
     "url": "https://github.com/HawaFallay/homework-11-Note-Taker/issues"
   },
-  "homepage": "https://github.com/HawaFallay/homework-11-Note-Taker#readme"
+  "homepage": "https://github.com/HawaFallay/homework-11-Note-Taker#readme",
+  "devDependencies": {}
 }
